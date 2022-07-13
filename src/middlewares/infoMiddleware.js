@@ -1,4 +1,4 @@
-const pkg = require('../package.json');
+const pkg = require('../../package.json');
 
 module.exports = (app) => {
     app.use((req, res, next) => {

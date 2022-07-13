@@ -19,8 +19,9 @@ app.use((req, res, next) => {
 });
 
 // Server's middlewares
-require('./securityMiddleware.js')(app, config);
-require('./infoMiddleware.js')(app);
+require('./middlewares/securityMiddleware.js')(app, config);
+require('./middlewares/preflightMiddleware.js')(app);
+require('./middlewares/infoMiddleware.js')(app);
 
 // Server's routes
 require('./routes.js')(app);
