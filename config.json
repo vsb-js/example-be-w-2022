@@ -1,0 +1,14 @@
+{
+  "host" : "0.0.0.0",
+  "port" : 8080,
+  "headers" : {
+    "x-frame-options" : "SAMEORIGIN",
+    "content-security-policy": "default-src 'none';",
+    "access-control-allow-headers" : "origin, x-requested-with, content-type, accept",
+    "access-control-allow-methods" : "GET, POST, PUT, DELETE, OPTIONS",
+    "access-control-allow-credentials" : true
+  },
+  "allowed-origin-domains" : [
+    "localhost"
+  ]
+}
