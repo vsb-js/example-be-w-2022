@@ -1,29 +1,34 @@
-module.exports = (app, config) => {
-    app.use((req, res, next) => {
-        // Hide server name
-        app.disable('x-powered-by');
+const config = require("../../config.json")
 
-        // Set custom security headers from config.json
-        Object.keys(config.headers).forEach(name => {
-            res.setHeader(name, config.headers[name])
-        });
+module.exports = (req, res, next) => {
+    // Hide server name
+    req.app.disable('x-powered-by')
 
-        // Check allowed domains from config.json. Set * for any origin.
-        const reqOrigin = req.get("origin");
-        const domain = getDomainFromOrigin(reqOrigin);
-        if(config["allowed-origin-domains"].find(allowedDomain => allowedDomain === domain || allowedDomain === "*")){
-            res.setHeader("access-control-allow-origin", reqOrigin ?? "*");
-        }
+    // Set custom security headers from config.json
+    Object.keys(config.headers).forEach(name => {
+        res.setHeader(name, config.headers[name])
+    })
 
-        next();
-    });
+    // Check allowed domains from config.json. Set header to * for any origin.
+    const reqOrigin = req.get("origin")
+    const domain = getDomainFromOrigin(reqOrigin)
+    if(config["allowed-origin-domains"].find(allowedDomain => allowedDomain === domain || allowedDomain === "*")){
+        res.setHeader("access-control-allow-origin", reqOrigin ?? "*")
+    }
+
+    next()
 }
 
-// Removes protocol and port from origin to keep domain name
+/**
+ * Removes protocol and port from origin and keeps domain name only
+ *
+ * @param {string} origin Request origin value
+ * @return {string} Domain name
+ */
 const getDomainFromOrigin = (origin) => {
-    if(origin == null) return "";
-    let firstChar = origin.lastIndexOf("/") + 1;
-    let lastChar = origin.lastIndexOf(":");
-    lastChar = lastChar > 0 ? lastChar : origin.length - firstChar;
-    return origin.substring(firstChar, lastChar);
+    if(origin == null) return ""
+    let firstChar = origin.lastIndexOf("/") + 1
+    let lastChar = origin.lastIndexOf(":")
+    lastChar = lastChar > 0 ? lastChar : origin.length - firstChar
+    return origin.substring(firstChar, lastChar)
 }
