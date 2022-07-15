@@ -3,16 +3,24 @@ import { PrismaClient } from "@prisma/client";
 const db = new PrismaClient();
 
 export default {
-  getAll: async (postId, author, text) => {
+  /**
+   * Returns array of comments under the post
+   *
+   * @param {number} postId Id of the post
+   * @param {string} searchedAuthor Searched phrase in author name
+   * @param {string} searchedText Searched phrase in text of comment
+   * @return {Object[]} Array of comments under the post
+   */
+  getAll: async (postId, searchedAuthor, searchedText) => {
     try {
       return await db.Comment.findMany({
         where: {
           postId: parseInt(postId),
           author: {
-            contains: author ?? "",
+            contains: searchedAuthor ?? "",
           },
           text: {
-            contains: text ?? "",
+            contains: searchedText ?? "",
           },
         },
       });
@@ -20,6 +28,12 @@ export default {
     return [];
   },
 
+  /**
+   * Returns comment with certain id
+   *
+   * @param {number} commentId Id of the comment
+   * @return {Object} Comment with certain id or null on failure
+   */
   get: async (commentId) => {
     try {
       return await db.Comment.findUnique({
@@ -30,26 +44,44 @@ export default {
     } catch {}
     return null;
   },
-  create: async (postId, newObject) => {
+
+  /**
+   * Inserts new comment into database
+   *
+   * @param {number} postId Id of the post
+   * @param {Object} newComment New comment object
+   * @return {Object} Inserted object or null on failure
+   */
+  create: async (postId, newComment) => {
     try {
-      newObject.postId = parseInt(postId)
-      newObject.date = new Date(newObject.date * 1000)
+      newComment.postId = parseInt(postId);
+      newComment.date = new Date(newComment.date * 1000);
       return await db.Comment.create({
-        data: newObject,
+        data: newComment,
       });
     } catch {
       console.error("[error] Create action failed");
     }
     return null;
   },
-  update: async (commentId, updatedObject) => {
+
+  /**
+   * Updates comment in database
+   *
+   * @param {number} postId Id of the post
+   * @param {Object} commentId Id of the comment
+   * @param {Object} updatedComment Updated comment object
+   * @return {boolean} True on success or false on failure
+   */
+  update: async (postId, commentId, updatedComment) => {
     try {
-      updatedObject.postId = parseInt(postId);
-      updatedObject.date = new Date(updatedObject.date * 1000);
+      updatedComment.postId = parseInt(postId);
+      updatedComment.date = new Date(updatedComment.date * 1000);
+
       await db.Comment.update({
-        data: updatedObject,
+        data: updatedComment,
         where: {
-          id: parseInt(commentId)
+          id: parseInt(commentId),
         },
       });
       return true;
@@ -58,10 +90,17 @@ export default {
     }
     return false;
   },
+
+  /**
+   * Deletes comment from database
+   *
+   * @param {Object} commentId Id of the comment
+   * @return {boolean} True on success or false on failure
+   */
   delete: async (commentId) => {
     await db.Comment.delete({
       where: {
-        id: parseInt(commentId)
+        id: parseInt(commentId),
       },
     });
     return true;

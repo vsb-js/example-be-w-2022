@@ -5,9 +5,10 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "npm run start:pro",
-    "start:pro": "dotenv -e .env.production nodemon src/server.js",
-    "start:dev": "dotenv -e .env.development nodemon src/server.js",
+    "start": "npm run start:dev",
+    "start:pro": "dotenv -e .env.production -- node src/server.js",
+    "start:dev": "dotenv -e .env.development -- nodemon -q src/server.js",
+    "start:test": "dotenv -e .env.test -- nodemon -q src/server.js",
     "test": "dotenv -e .env.test -- mocha --exit",
     "prisma:init": "npm run prisma:init:pro && npm run prisma:init:dev && npm run prisma:init:test",
     "prisma:init:pro": "dotenv -e .env.production -- prisma migrate dev --name init-pro",

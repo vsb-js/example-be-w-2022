@@ -39,7 +39,10 @@ router.post("/v1/posts/:postId/comments", async (req, res) => {
     });
     return;
   }
-  res.setHeader("Location",`/v1/posts/${req.params.postId}/comments/${result.id}`);
+  res.setHeader(
+    "Location",
+    `/v1/posts/${req.params.postId}/comments/${result.id}`,
+  );
   res.status(201).json(res.body);
 });
 // Get post comment
@@ -61,7 +64,7 @@ router.get("/v1/posts/:postId/comments/:commentId", async (req, res) => {
 // Modify post comment
 router.put("/v1/posts/:postId/comments/:commentId", async (req, res) => {
   req.body.postId = req.params.postId;
-  let result = await commentsService.create(req.params.commentId, req.body);
+  let result = await commentsService.update(req.params.postId, req.params.commentId, req.body);
   if (!result) {
     res.status(400).json({
       ...res.body,
@@ -111,7 +114,7 @@ router.post("/v1/posts", async (req, res) => {
     });
     return;
   }
-  res.setHeader("Location",`/v1/posts/${result.id}`);
+  res.setHeader("Location", `/v1/posts/${result.id}`);
   res.status(201).json(res.body);
 });
 // Get post
@@ -158,7 +161,7 @@ router.delete("/v1/posts/:postId", async (req, res) => {
 });
 
 // Endpoint was not found
-router.get("*", async (req, res) => {
+router.all("*", async (req, res) => {
   res.status(404).json({
     ...res.body,
     error: "Not Found",

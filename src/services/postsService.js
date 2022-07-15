@@ -3,21 +3,36 @@ import { PrismaClient } from "@prisma/client";
 const db = new PrismaClient();
 
 export default {
-  getAll: async (title, author, text) => {
+  /**
+   * Returns array of the posts
+   *
+   * @param {string} searchedTitle Searched phrase in title
+   * @param {string} searchedAuthor Searched phrase in author name
+   * @param {string} searchedText Searched phrase in text of the post
+   * @return {Object[]} Array of the posts
+   */
+  getAll: async (searchedTitle, searchedAuthor, searchedText) => {
     return await db.Post.findMany({
       where: {
         title: {
-          contains: title ?? "",
+          contains: searchedTitle ?? "",
         },
         author: {
-          contains: author ?? "",
+          contains: searchedAuthor ?? "",
         },
         text: {
-          contains: text ?? "",
+          contains: searchedText ?? "",
         },
       },
     });
   },
+
+  /**
+   * Returns post with certain id
+   *
+   * @param {number} postId Id of the post
+   * @return {Object} Post with certain id or null on failure
+   */
   get: async (postId) => {
     try {
       return await db.Post.findUnique({
@@ -28,25 +43,40 @@ export default {
     } catch {}
     return null;
   },
-  create: async (newObject) => {
+
+  /**
+   * Inserts new post into database
+   *
+   * @param {Object} newPost New post object
+   * @return {Object} Inserted object or null on failure
+   */
+  create: async (newPost) => {
     try {
-      newObject.date = new Date(newObject.date * 1000);
+      newPost.date = new Date(newPost.date * 1000);
       return await db.Post.create({
-        data: newObject,
+        data: newPost,
       });
     } catch {
       console.error("[error] Create action failed");
     }
     return null;
   },
-  update: async (postId, updatedObject) => {
+
+  /**
+   * Updates post in database
+   *
+   * @param {number} postId Id of the post
+   * @param {Object} updatedPost Updated post object
+   * @return {boolean} True on success or false on failure
+   */
+  update: async (postId, updatedPost) => {
     try {
-      //updatedObject.date = new Date(updatedObject.date * 1000)
+      updatedPost.date = new Date(updatedPost.date * 1000)
       await db.Post.update({
         where: {
           id: parseInt(postId),
         },
-        data: updatedObject,
+        data: updatedPost,
       });
       return true;
     } catch {
@@ -54,6 +84,13 @@ export default {
     }
     return false;
   },
+
+  /**
+   * Deletes post from database
+   *
+   * @param {number} postId Id of the post
+   * @return {boolean} True on success or false on failure
+   */
   delete: async (postId) => {
     try {
       await db.Post.delete({

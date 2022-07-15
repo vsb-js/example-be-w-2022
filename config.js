@@ -6,12 +6,9 @@ export default {
     "x-frame-options": "SAMEORIGIN",
     "content-security-policy": "default-src 'none';",
   },
-  cors : {
+  cors: {
     // Allowed client URLs with protocol and port
-    origin: [
-      "http://localhost:3000",
-      "https://localhost:3000"
-    ],
+    origin: ["http://localhost:3000", "https://localhost:3000"],
     optionsSuccessStatus: 200,
-  }
+  },
 };

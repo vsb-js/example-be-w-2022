@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import config from "../config.js";
-import packageJson from "../package.json" assert { type: "json" };
 
 import headersMiddleware from "./middlewares/headersMiddleware.js";
 import infoMiddleware from "./middlewares/infoMiddleware.js";
@@ -10,20 +9,18 @@ import routes from "./routes/routes.js";
 
 const app = express();
 
-app.use(
-  express.urlencoded({
-    extended: true,
-  }),
-);
-
 // Parse JSON body for each request
 app.use(express.json());
+
+// Hide server name for security reason
+app.disable("x-powered-by");
 
 /*
   Add CORS headers.
   Learn more on: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
 */
 app.use(cors(config.cors));
+
 /*
   Catch preflight requests before precessing by router
   Learn more on: https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request
@@ -76,7 +73,7 @@ app.use((error, req, res, next) => {
 // Start express server
 app.listen(config.port, config.host, () => {
   console.info(
-    `[info] ${packageJson.name} ${packageJson.version} is listening on port ${config.port}`,
+    `[info] ${process.env.npm_package_name} ${process.env.npm_package_version} is listening on port ${config.port}`,
   );
 });
 
