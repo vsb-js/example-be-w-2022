@@ -3,19 +3,19 @@ import app from "../src/server.js";
 
 // Test main page
 describe("REST API Main page", () => {
-  it("GET /", function (done) {
-    supertest(app)
-      .get("/")
-      .set("Accept", "application/json")
-      .expect(200)
-      .end(done);
-  });
+    it("GET /", (done) => {
+        supertest(app)
+            .get("/")
+            .set("Accept", "application/json")
+            .expect(200)
+            .end(done);
+    });
 });
 
 describe("REST API Posts", () => {
   var createdPostUrl = "/v1/posts/{postId}";
 
-  it("GET /v1/posts - Get all posts", function (done) {
+  it("GET /v1/posts - Get all posts", (done) => {
     supertest(app)
       .get("/v1/posts")
       .set("Accept", "application/json")
@@ -23,7 +23,7 @@ describe("REST API Posts", () => {
       .end(done);
   });
 
-  it("POST /v1/posts - Create new post", function (done) {
+  it("POST /v1/posts - Create new post", (done) => {
     supertest(app)
       .post("/v1/posts")
       .send({
@@ -43,7 +43,7 @@ describe("REST API Posts", () => {
       .end(done);
   });
 
-  it(`GET /v1/posts/{postId} - Get created post`, function (done) {
+  it(`GET /v1/posts/{postId} - Get created post`, (done) => {
     supertest(app)
       .get(createdPostUrl)
       .set("Accept", "application/json")
@@ -51,7 +51,7 @@ describe("REST API Posts", () => {
       .end(done);
   });
 
-  it(`PUT /v1/posts/{postId} - Update created post`, function (done) {
+  it(`PUT /v1/posts/{postId} - Update created post`, (done) => {
     supertest(app)
       .put(createdPostUrl)
       .send({
@@ -65,7 +65,7 @@ describe("REST API Posts", () => {
       .end(done);
   });
 
-  it(`DELETE /v1/posts/{postId} - Delete created post`, function (done) {
+  it(`DELETE /v1/posts/{postId} - Delete created post`, (done) => {
     supertest(app)
       .delete(createdPostUrl)
       .set("Accept", "application/json")
@@ -97,7 +97,7 @@ describe("REST API Comments", () => {
   });
 
 
-  it("GET /v1/posts/{postId}/comments - Get all comments of post", function (done) {
+  it("GET /v1/posts/{postId}/comments - Get all comments of post", (done) => {
     supertest(app)
       .get(`${createdPostUrl}/comments`)
       .set("Accept", "application/json")
@@ -105,7 +105,7 @@ describe("REST API Comments", () => {
       .end(done);
   });
 
-  it("POST /v1/posts/{postId}/comments - Create new comment", function (done) {
+  it("POST /v1/posts/{postId}/comments - Create new comment", (done) => {
     supertest(app)
       .post(`${createdPostUrl}/comments`)
       .send({
@@ -124,7 +124,7 @@ describe("REST API Comments", () => {
       .end(done);
   });
 
-  it(`GET /v1/posts/{postId}/comments/{commentId} - Get created comment`, function (done) {
+  it(`GET /v1/posts/{postId}/comments/{commentId} - Get created comment`, (done) => {
     supertest(app)
       .get(createdCommnentUrl)
       .set("Accept", "application/json")
@@ -132,7 +132,7 @@ describe("REST API Comments", () => {
       .end(done);
   });
 
-  it(`PUT /v1/posts/{postId}/comments/{commentId} - Update created comment`, function (done) {
+  it(`PUT /v1/posts/{postId}/comments/{commentId} - Update created comment`, (done) => {
     supertest(app)
       .put(createdCommnentUrl)
       .send({
@@ -145,7 +145,7 @@ describe("REST API Comments", () => {
       .end(done);
   });
 
-  it(`DELETE /v1/posts/{postId}/comments/{commentId} - Delete created comment`, function (done) {
+  it(`DELETE /v1/posts/{postId}/comments/{commentId} - Delete created comment`, (done) => {
     supertest(app)
       .delete(createdCommnentUrl)
       .set("Accept", "application/json")
@@ -156,15 +156,5 @@ describe("REST API Comments", () => {
   // Delete temporary created post
   after(() => {
     supertest(app).delete(createdPostUrl).set("Accept", "application/json");
-  });
-});
-
-describe("REST API Main page", () => {
-  it("GET /", function (done) {
-    supertest(app)
-      .get("/")
-      .set("Accept", "application/json")
-      .expect(200)
-      .end(done);
   });
 });
