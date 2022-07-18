@@ -1,5 +1,5 @@
 import supertest from "supertest";
-import app from "../src/server.js";
+import app from "../server.js";
 
 // Test server REST API using supertest package
 
@@ -21,6 +21,7 @@ describe("REST API | Posts", () => {
       .get("/v1/posts")
       .set("Accept", "application/json")
       .expect(200)
+      .catch(console.error)
       .end(done);
   });
 

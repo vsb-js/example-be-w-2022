@@ -11,9 +11,9 @@
     "start:test": "dotenv -e .env.test -- nodemon -q src/server.js",
     "test": "dotenv -e .env.test -- mocha --exit",
     "prisma:init": "npm run prisma:init:pro && npm run prisma:init:dev && npm run prisma:init:test",
-    "prisma:init:pro": "dotenv -e .env.production -- prisma migrate dev --name init-pro",
-    "prisma:init:dev": "dotenv -e .env.development -- prisma migrate dev --name init-dev",
-    "prisma:init:test": "dotenv -e .env.test -- prisma migrate dev --name init-test",
+    "prisma:init:pro": "dotenv -e .env.production -- prisma migrate dev --name init",
+    "prisma:init:dev": "dotenv -e .env.development -- prisma migrate dev --name init",
+    "prisma:init:test": "dotenv -e .env.test -- prisma migrate dev --name init",
     "fix": "npx prettier --write ."
   },
   "prisma": {

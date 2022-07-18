@@ -85,6 +85,7 @@ describe("Database | Comment", () => {
   it("Get all comments", async () => {
     let result = await db.Comment.findMany();
     expect(result).to.be.a("array");
+    console.log(result);
     expect(result.length).greaterThan(0);
   });
 

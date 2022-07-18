@@ -2,12 +2,13 @@
 
 ## Description
 
-This is example project of simple REST API. This API contains two entities with 1:N association (Post and Comment under the post).
+This is example project of simple blog REST API. This API contains two entities with 1:N association (Post and Comment under the post).
 The whole app is built on the top of [express](https://www.npmjs.com/package/express) web server and [prisma](https://www.prisma.io) ORM. As the database engine is used [sqlite3](https://www.npmjs.com/package/sqlite3).
 
 Feel free to start your own project from this example :-).
 
 ## Dependencies
+
 1. [nodejs](https://nodejs.org/en/) >= 14
 2. [npm](https://www.npmjs.com/)
 3. [git](https://git-scm.com/)
@@ -45,7 +46,7 @@ Don't forget that each mode has its own database file with different data.
 
 ## Config files
 
-All important application settings are located in main config file `config.js`. 
+All important application settings are located in main config file `config.js`.
 It allows you to set host, port, custom response [headers](https://developer.mozilla.org/en-US/docs/Glossary/Response_header) and [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) origins.
 
 ## Prettier
@@ -55,9 +56,9 @@ Simply run `npm run fix` and prettier will do the rest. You can define your own 
 
 ## Prisma
 
-[Prisma](https://www.npmjs.com/package/prisma) is great ORM which simplifies database use. 
+[Prisma](https://www.npmjs.com/package/prisma) is great ORM which simplifies database use.
 This project uses for simplicity Sqlite3 but many other databases are available.
-Prisma-cli allows you to manage you database from CLI by actions under `prisma` command. 
+Prisma-cli allows you to manage you database from CLI by actions under `prisma` command.
 Database is created from [schema](https://www.prisma.io/docs/concepts/components/prisma-schema) file `prisma/schema.prisma`.
 
 - To create your first migration and generate database schema run `dotenv -e .env.development -- prisma migrate dev --name init`.
@@ -66,18 +67,19 @@ Database is created from [schema](https://www.prisma.io/docs/concepts/components
 
 ## Tests
 
-Application contains few simple tests build with use of [mocha](https://www.npmjs.com/package/mocha). 
-All test sets are located under `test/` directory. 
-There are server REST API tests based on [supertest](https://www.npmjs.com/package/supertest) package 
+Application contains few simple tests build with use of [mocha](https://www.npmjs.com/package/mocha).
+All test sets are located under `test/` directory.
+There are server REST API tests based on [supertest](https://www.npmjs.com/package/supertest) package
 and database tests based on [chai](https://www.npmjs.com/package/chai) package.
-You can execute them all by running `npm test`. 
+You can execute them all by running `npm test`.
 See their source files to find out how to write you own tests.
 
-
 ## Useful notes
-* This project is set to `module` type in `package.json`. That's why you have to use JS ES6 `import` / `export` statement instead of older ES5 `require()` / `module.exports`.
-Learn more [here](https://www.geeksforgeeks.org/difference-between-node-js-require-and-es6-import-and-export/).
-* Always run this project with npm or yarn and desired .env file to avoid errors.
+
+- This project is set to `module` type in `package.json`. That's why you have to use JS ES6 `import` / `export` statement instead of older ES5 `require()` / `module.exports`.
+  Learn more [here](https://www.geeksforgeeks.org/difference-between-node-js-require-and-es6-import-and-export/).
+- Always run this project with npm or yarn and desired .env file to avoid errors.
 
 ## License
+
 MIT
