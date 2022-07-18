@@ -16,7 +16,7 @@ describe("Database | Post", () => {
 
   it("Get all posts", async () => {
     let result = await db.Post.findMany();
-    expect(result).to.be.a("array");
+    expect(result).to.be.an("array");
     expect(result.length).greaterThan(0);
   });
 
@@ -29,7 +29,7 @@ describe("Database | Post", () => {
         text: "Content of the post",
       },
     });
-    expect(result).to.be.a("object");
+    expect(result).to.be.an("object");
     createdPostId = result.id;
   });
 
@@ -39,7 +39,7 @@ describe("Database | Post", () => {
         id: createdPostId,
       },
     });
-    expect(result).to.be.a("object");
+    expect(result).to.be.an("object");
   });
 
   it("Update created post", async () => {
@@ -84,7 +84,7 @@ describe("Database | Comment", () => {
 
   it("Get all comments", async () => {
     let result = await db.Comment.findMany();
-    expect(result).to.be.a("array");
+    expect(result).to.be.an("array");
     expect(result.length).greaterThan(0);
   });
 
@@ -97,7 +97,7 @@ describe("Database | Comment", () => {
         postId: createdPostId,
       },
     });
-    expect(result).to.be.a("object");
+    expect(result).to.be.an("object");
     createdCommentId = result.id;
   });
 
@@ -107,7 +107,7 @@ describe("Database | Comment", () => {
         id: createdCommentId,
       },
     });
-    expect(result).to.be.a("object");
+    expect(result).to.be.an("object");
   });
 
   it("Update created comment", async () => {

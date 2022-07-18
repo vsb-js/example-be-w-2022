@@ -26,7 +26,9 @@ export default {
           },
         },
       });
-    } catch {}
+    } catch {
+      //console.error("[error] Get list of post action failed");
+    }
     return [];
   },
 
@@ -40,10 +42,12 @@ export default {
     try {
       return await db.Post.findUnique({
         where: {
-          id: parseInt(postId),
+          id: postId,
         },
       });
-    } catch {}
+    } catch {
+      //console.error("[error] Get post action failed");
+    }
     return null;
   },
 
@@ -60,7 +64,7 @@ export default {
         data: newPost,
       });
     } catch {
-      console.error("[error] Create action failed");
+      //console.error("[error] Create post action failed");
     }
     return null;
   },
@@ -77,13 +81,13 @@ export default {
       updatedPost.date = new Date(updatedPost.date * 1000);
       await db.Post.update({
         where: {
-          id: parseInt(postId),
+          id: postId,
         },
         data: updatedPost,
       });
       return true;
     } catch {
-      console.error("[error] Update action failed");
+      //console.error("[error] Update post action failed");
     }
     return false;
   },
@@ -98,12 +102,12 @@ export default {
     try {
       await db.Post.delete({
         where: {
-          id: parseInt(postId),
+          id: postId,
         },
       });
       return true;
     } catch {
-      console.error("[error] Delete action failed");
+      //console.error("[error] Delete post action failed");
     }
     return false;
   },

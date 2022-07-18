@@ -30,7 +30,7 @@ app.options("*", cors(config.cors));
 // Change default JSON serialization of Date to UNIX timestamp epoch time
 app.set("json replacer", function (key, value) {
   if (this[key] instanceof Date) {
-    // Your own date serialization
+    // Convert JS Date to UNIX timestamp
     value = parseInt((this[key].getTime() / 1000).toFixed(0));
   }
   return value;

@@ -16,7 +16,7 @@ export default {
         };
       });
     } catch {
-      console.error("[error] Routes list failed");
+      //console.error("[error] Routes list failed");
     }
     return [];
   },
