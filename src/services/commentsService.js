@@ -15,7 +15,7 @@ export default {
     try {
       return await db.Comment.findMany({
         where: {
-          postId: parseInt(postId),
+          postId: postId,
           author: {
             contains: searchedAuthor ?? "",
           },
@@ -24,7 +24,9 @@ export default {
           },
         },
       });
-    } catch {}
+    } catch {
+      //console.error("[error] Get list of comments action failed");
+    }
     return [];
   },
 
@@ -38,10 +40,12 @@ export default {
     try {
       return await db.Comment.findUnique({
         where: {
-          id: parseInt(commentId),
+          id: commentId,
         },
       });
-    } catch {}
+    } catch {
+      //console.error("[error] Get comment action failed");
+    }
     return null;
   },
 
@@ -54,13 +58,13 @@ export default {
    */
   create: async (postId, newComment) => {
     try {
-      newComment.postId = parseInt(postId);
+      newComment.postId = postId;
       newComment.date = new Date(newComment.date * 1000);
       return await db.Comment.create({
         data: newComment,
       });
     } catch {
-      //console.error("[error] Create action failed");
+      //console.error("[error] Create comment action failed");
     }
     return null;
   },
@@ -69,24 +73,24 @@ export default {
    * Updates comment in database
    *
    * @param {number} postId Id of the post
-   * @param {Object} commentId Id of the comment
+   * @param {number} commentId Id of the comment
    * @param {Object} updatedComment Updated comment object
    * @return {boolean} True on success or false on failure
    */
   update: async (postId, commentId, updatedComment) => {
     try {
-      updatedComment.postId = parseInt(postId);
+      updatedComment.postId = postId;
       updatedComment.date = new Date(updatedComment.date * 1000);
 
       await db.Comment.update({
         data: updatedComment,
         where: {
-          id: parseInt(commentId),
+          id: commentId,
         },
       });
       return true;
     } catch {
-      //console.error("[error] Update action failed");
+      //console.error("[error] Update comment action failed");
     }
     return false;
   },
@@ -94,19 +98,19 @@ export default {
   /**
    * Deletes comment from database
    *
-   * @param {Object} commentId Id of the comment
+   * @param {number} commentId Id of the comment
    * @return {boolean} True on success or false on failure
    */
   delete: async (commentId) => {
     try {
       await db.Comment.delete({
         where: {
-          id: parseInt(commentId),
+          id: commentId,
         },
       });
       return true;
     } catch {
-      //console.error("[error] Delete action failed");
+      //console.error("[error] Delete comment action failed");
     }
     return false;
   },
