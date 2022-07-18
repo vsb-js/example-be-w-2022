@@ -98,11 +98,16 @@ export default {
    * @return {boolean} True on success or false on failure
    */
   delete: async (commentId) => {
-    await db.Comment.delete({
-      where: {
-        id: parseInt(commentId),
-      },
-    });
-    return true;
+    try {
+      await db.Comment.delete({
+        where: {
+          id: parseInt(commentId),
+        },
+      });
+      return true;
+    } catch {
+      console.error("[error] Delete action failed");
+    }
+    return false;
   },
 };

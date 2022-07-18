@@ -28,6 +28,7 @@ router.get("/v1/posts/:postId/comments", async (req, res) => {
     comments: comments,
   });
 });
+
 // Create post comment
 router.post("/v1/posts/:postId/comments", async (req, res) => {
   let result = await commentsService.create(req.params.postId, req.body);
@@ -45,6 +46,7 @@ router.post("/v1/posts/:postId/comments", async (req, res) => {
   );
   res.status(201).json(res.body);
 });
+
 // Get post comment
 router.get("/v1/posts/:postId/comments/:commentId", async (req, res) => {
   const comment = await commentsService.get(req.params.commentId);
@@ -61,6 +63,7 @@ router.get("/v1/posts/:postId/comments/:commentId", async (req, res) => {
     data: comment,
   });
 });
+
 // Modify post comment
 router.put("/v1/posts/:postId/comments/:commentId", async (req, res) => {
   req.body.postId = req.params.postId;
@@ -79,6 +82,7 @@ router.put("/v1/posts/:postId/comments/:commentId", async (req, res) => {
   }
   res.status(200).json(res.body);
 });
+
 // Delete post comment
 router.delete("/v1/posts/:postId/comments/:commentId", async (req, res) => {
   let result = await commentsService.delete(req.params.commentId);
@@ -107,6 +111,7 @@ router.get("/v1/posts", async (req, res) => {
     posts: posts,
   });
 });
+
 // Create post
 router.post("/v1/posts", async (req, res) => {
   let result = await postsService.create(req.body);
@@ -121,6 +126,7 @@ router.post("/v1/posts", async (req, res) => {
   res.setHeader("Location", `/v1/posts/${result.id}`);
   res.status(201).json(res.body);
 });
+
 // Get post
 router.get("/v1/posts/:postId", async (req, res) => {
   const post = await postsService.get(req.params.postId);
@@ -137,6 +143,7 @@ router.get("/v1/posts/:postId", async (req, res) => {
     data: post,
   });
 });
+
 // Modify post
 router.put("/v1/posts/:postId", async (req, res) => {
   let result = await postsService.create(req.body);
@@ -150,6 +157,7 @@ router.put("/v1/posts/:postId", async (req, res) => {
   }
   res.status(200).json(res.body);
 });
+
 // Delete post
 router.delete("/v1/posts/:postId", async (req, res) => {
   let result = await postsService.delete(req.params.postId);
