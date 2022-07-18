@@ -2,11 +2,12 @@
 
 ## Description
 
-This is example project of simple REST API. This API contains two entities (Post and comment under the post).
-The whole app is build on the top of express web server and prisma ORM. As the database engine is used Sqlite3.
+This is example project of simple REST API. This API contains two entities with 1:N association (Post and Comment under the post).
+The whole app is built on the top of [express](https://www.npmjs.com/package/express) web server and [prisma](https://www.prisma.io) ORM. As the database engine is used [sqlite3](https://www.npmjs.com/package/sqlite3).
+
+Feel free to start your own project from this example :-).
 
 ## Dependencies
-
 1. [nodejs](https://nodejs.org/en/) >= 14
 2. [npm](https://www.npmjs.com/)
 3. [git](https://git-scm.com/)
@@ -20,11 +21,11 @@ The whole app is build on the top of express web server and prisma ORM. As the d
    cd example-project/
    ```
 
-   or download it as a separate archive from [here](https://gitlab.com/jan.havlena/example-project/-/archive/main/example-project-main.zip).
+   or download it as a standalone archive from [here](https://gitlab.com/jan.havlena/example-project/-/archive/main/example-project-main.zip).
 
 2. Install all required packages by running: `npm install`.
    You can find their names in `package.json` file under `dependencies` field.
-3. Create migration and initialize databases with example data from `seed.js` file by running `npm run prisma:init`.
+3. Create migration and initialize databases with example data from `seed.js` file by running prepared script `npm run prisma:init`.
 4. Now you can start app in development mode by running `npm start` or `npm run start:dev`.
 
 ## .env files
@@ -44,17 +45,20 @@ Don't forget that each mode has its own database file with different data.
 
 ## Config files
 
-All important application settings are located in main config file `config.js`. It allows you to set host, port, custom headers and cors origins.
+All important application settings are located in main config file `config.js`. 
+It allows you to set host, port, custom response [headers](https://developer.mozilla.org/en-US/docs/Glossary/Response_header) and [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) origins.
 
 ## Prettier
 
 [Prettier](https://www.npmjs.com/package/prettier) is awesome tool which formats your code automatically into human readable form. Pretty cool, right?
-Simply run `npm run fix` and prettier will do the rest. You can define your own settings in `.prettierrc` file.
+Simply run `npm run fix` and prettier will do the rest. You can define your own [settings](https://prettier.io/docs/en/options.html) in `.prettierrc` file.
 
 ## Prisma
 
-[Prisma](https://www.npmjs.com/package/prisma) is great ORM which simplify database use. This project uses for simplicity Sqlite3 but many other databases are available.
-Prisma-cli allows you to manage you database with actions under `prisma` command. Database is created from schema file `prisma/schema.prisma`.
+[Prisma](https://www.npmjs.com/package/prisma) is great ORM which simplifies database use. 
+This project uses for simplicity Sqlite3 but many other databases are available.
+Prisma-cli allows you to manage you database from CLI by actions under `prisma` command. 
+Database is created from [schema](https://www.prisma.io/docs/concepts/components/prisma-schema) file `prisma/schema.prisma`.
 
 - To create your first migration and generate database schema run `dotenv -e .env.development -- prisma migrate dev --name init`.
 - To apply all waiting migrations run `dotenv -e .env.development -- prisma migrate deploy`.
@@ -62,9 +66,18 @@ Prisma-cli allows you to manage you database with actions under `prisma` command
 
 ## Tests
 
-Application contains few simple tests build with use of [supertest](https://www.npmjs.com/package/supertest) and [mocha](https://www.npmjs.com/package/mocha) packages. All tests are located under `test/` directory. You can execute them by running `npm test`.
-See `server.tests.js` file to find out how to write you own.
+Application contains few simple tests build with use of [mocha](https://www.npmjs.com/package/mocha). 
+All test sets are located under `test/` directory. 
+There are server REST API tests based on [supertest](https://www.npmjs.com/package/supertest) package 
+and database tests based on [chai](https://www.npmjs.com/package/chai) package.
+You can execute them all by running `npm test`. 
+See their source files to find out how to write you own tests.
+
+
+## Useful notes
+* This project is set to `module` type in `package.json`. That's why you have to use JS ES6 `import` / `export` statement instead of older ES5 `require()` / `module.exports`.
+Learn more [here](https://www.geeksforgeeks.org/difference-between-node-js-require-and-es6-import-and-export/).
+* Always run this project with npm or yarn and desired .env file to avoid errors.
 
 ## License
-
 MIT
