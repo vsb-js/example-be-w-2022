@@ -42,7 +42,7 @@ router.post("/v1/posts/:postId/comments", async (req, res) => {
   }
   res.status(201).json({
     ...res.body,
-    data : result
+    data: result,
   });
 });
 
@@ -124,7 +124,7 @@ router.post("/v1/posts", async (req, res) => {
   }
   res.status(201).json({
     ...res.body,
-    data : result
+    data: result,
   });
 });
 
