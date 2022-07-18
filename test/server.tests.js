@@ -1,5 +1,6 @@
 import supertest from "supertest";
 import app from "../src/server.js";
+import { expect } from "chai";
 
 // Test server REST API using supertest package
 
@@ -9,6 +10,9 @@ describe("REST API | Main page", () => {
       .get("/")
       .set("Accept", "application/json")
       .expect(200)
+      .expect((res) => {
+        expect(res.body).to.be.an("object");
+      })
       .end(done);
   });
 });
@@ -22,12 +26,9 @@ describe("REST API | Posts", () => {
       .set("Accept", "application/json")
       .expect(200)
       .expect((res) => {
-        if (res.body.posts.length === 0) {
-          throw "Response posts field is empty";
-        }
-        if (res.body.count !== res.body.posts.length) {
-          throw "Response count field and posts length doesn't match";
-        }
+        expect(res.body.posts).to.be.an("array");
+        expect(res.body.posts.length).greaterThan(0);
+        expect(res.body.posts.length).equal(res.body.count);
       })
       .end(done);
   });
@@ -37,6 +38,11 @@ describe("REST API | Posts", () => {
       .get("/v1/posts?author=john.doe@example.com&title=post&text=content")
       .set("Accept", "application/json")
       .expect(200)
+      .expect((res) => {
+        expect(res.body.posts).to.be.an("array");
+        expect(res.body.posts.length).greaterThan(0);
+        expect(res.body.posts.length).equal(res.body.count);
+      })
       .end(done);
   });
 
@@ -52,6 +58,8 @@ describe("REST API | Posts", () => {
       .set("Accept", "application/json")
       .expect(201)
       .expect((res) => {
+        expect(res.body).to.be.an("object");
+        expect(res.body.data).to.be.an("object");
         createdPostId = res.body.data.id;
       })
       .end(done);
@@ -62,6 +70,13 @@ describe("REST API | Posts", () => {
       .get(`/v1/posts/${createdPostId}`)
       .set("Accept", "application/json")
       .expect(200)
+      .expect((res) => {
+        expect(res.body).to.be.an("object");
+        expect(res.body.data).to.be.an("object");
+        expect(res.body.data.title).equal("Test post");
+        expect(res.body.data.author).equal("unknown@example.com");
+        expect(res.body.data.text).equal("Text of the post");
+      })
       .end(done);
   });
 
@@ -84,6 +99,13 @@ describe("REST API | Posts", () => {
       .delete(`/v1/posts/${createdPostId}`)
       .set("Accept", "application/json")
       .expect(200)
+      .end(done);
+  });
+  it(`DELETE /v1/posts/{postId} - Delete already deleted post`, (done) => {
+    supertest(app)
+      .delete(`/v1/posts/${createdPostId}`)
+      .set("Accept", "application/json")
+      .expect(404)
       .end(done);
   });
 });
@@ -113,6 +135,11 @@ describe("REST API | Comments", () => {
       .get(`/v1/posts/${createdPostId}/comments`)
       .set("Accept", "application/json")
       .expect(200)
+      .expect((res) => {
+        expect(res.body.comments).to.be.an("array");
+        expect(res.body.comments.length).equal(0);
+        expect(res.body.comments.length).equal(res.body.count);
+      })
       .end(done);
   });
 
@@ -127,6 +154,7 @@ describe("REST API | Comments", () => {
       .set("Accept", "application/json")
       .expect(201)
       .expect((res) => {
+        expect(res.body.data).to.be.an("object");
         createdCommentId = res.body.data.id;
       })
       .end(done);
@@ -140,12 +168,9 @@ describe("REST API | Comments", () => {
       .set("Accept", "application/json")
       .expect(200)
       .expect((res) => {
-        if (res.body.comments.length === 0) {
-          throw "Response posts field is empty";
-        }
-        if (res.body.count !== res.body.comments.length) {
-          throw "Response count field and posts length doesn't match";
-        }
+        expect(res.body.comments).to.be.an("array");
+        expect(res.body.comments.length).greaterThan(0);
+        expect(res.body.comments.length).equal(res.body.count);
       })
       .end(done);
   });
@@ -155,6 +180,12 @@ describe("REST API | Comments", () => {
       .get(`/v1/posts/${createdPostId}/comments/${createdCommentId}`)
       .set("Accept", "application/json")
       .expect(200)
+      .expect((res) => {
+        expect(res.body).to.be.an("object");
+        expect(res.body.data).to.be.an("object");
+        expect(res.body.data.author).equal("author@example.com");
+        expect(res.body.data.text).equal("Text of the comment");
+      })
       .end(done);
   });
 
@@ -176,6 +207,14 @@ describe("REST API | Comments", () => {
       .delete(`/v1/posts/${createdPostId}/comments/${createdCommentId}`)
       .set("Accept", "application/json")
       .expect(200)
+      .end(done);
+  });
+
+  it(`DELETE /v1/posts/{postId}/comments/{commentId} - Delete already deleted comment`, (done) => {
+    supertest(app)
+      .delete(`/v1/posts/${createdPostId}/comments/${createdCommentId}`)
+      .set("Accept", "application/json")
+      .expect(404)
       .end(done);
   });
 

@@ -60,7 +60,7 @@ export default {
         data: newPost,
       });
     } catch {
-      console.error("[error] Create action failed");
+      //console.error("[error] Create action failed");
     }
     return null;
   },
@@ -83,7 +83,7 @@ export default {
       });
       return true;
     } catch {
-      console.error("[error] Update action failed");
+      //console.error("[error] Update action failed");
     }
     return false;
   },
@@ -103,7 +103,7 @@ export default {
       });
       return true;
     } catch {
-      console.error("[error] Delete action failed");
+      //console.error("[error] Delete action failed");
     }
     return false;
   },
