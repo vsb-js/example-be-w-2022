@@ -1,19 +1,20 @@
 import supertest from "supertest";
 import app from "../src/server.js";
 
-// Test main page
-describe("REST API Main page", () => {
-    it("GET /", (done) => {
-        supertest(app)
-            .get("/")
-            .set("Accept", "application/json")
-            .expect(200)
-            .end(done);
-    });
+// Test server REST API using supertest package
+
+describe("REST API | Main page", () => {
+  it("GET /", (done) => {
+    supertest(app)
+      .get("/")
+      .set("Accept", "application/json")
+      .expect(200)
+      .end(done);
+  });
 });
 
-describe("REST API Posts", () => {
-  var createdPostUrl = "/v1/posts/{postId}";
+describe("REST API | Posts", () => {
+  let createdPostUrl = "/v1/posts/{postId}";
 
   it("GET /v1/posts - Get all posts", (done) => {
     supertest(app)
@@ -74,9 +75,9 @@ describe("REST API Posts", () => {
   });
 });
 
-describe("REST API Comments", () => {
-  var createdPostUrl = "/v1/posts/{postId}";
-  var createdCommnentUrl = "/v1/posts/{postId}/comment/{commentId}";
+describe("REST API | Comments", () => {
+  let createdPostUrl = "/v1/posts/{postId}";
+  let createdCommnentUrl = "/v1/posts/{postId}/comment/{commentId}";
 
   // Add temporary post for testing purpose
   before(() => {
@@ -95,7 +96,6 @@ describe("REST API Comments", () => {
         }
       });
   });
-
 
   it("GET /v1/posts/{postId}/comments - Get all comments of post", (done) => {
     supertest(app)
@@ -141,7 +141,7 @@ describe("REST API Comments", () => {
         text: "Text of the comment",
       })
       .set("Accept", "application/json")
-        .expect(200)
+      .expect(200)
       .end(done);
   });
 

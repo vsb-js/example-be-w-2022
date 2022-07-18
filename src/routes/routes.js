@@ -64,7 +64,11 @@ router.get("/v1/posts/:postId/comments/:commentId", async (req, res) => {
 // Modify post comment
 router.put("/v1/posts/:postId/comments/:commentId", async (req, res) => {
   req.body.postId = req.params.postId;
-  let result = await commentsService.update(req.params.postId, req.params.commentId, req.body);
+  let result = await commentsService.update(
+    req.params.postId,
+    req.params.commentId,
+    req.body,
+  );
   if (!result) {
     res.status(400).json({
       ...res.body,

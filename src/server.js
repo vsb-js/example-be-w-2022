@@ -75,7 +75,7 @@ app.listen(config.port, config.host, () => {
   console.info(
     `[info] ${process.env.npm_package_name} ${process.env.npm_package_version} is listening on port ${config.port}`,
   );
-  console.info(`[info] Running in the ${process.env.NODE_ENV} mode`)
+  console.info(`[info] Running in the ${process.env.NODE_ENV} mode`);
 });
 
 export default app;

@@ -12,19 +12,22 @@ export default {
    * @return {Object[]} Array of the posts
    */
   getAll: async (searchedTitle, searchedAuthor, searchedText) => {
-    return await db.Post.findMany({
-      where: {
-        title: {
-          contains: searchedTitle ?? "",
+    try {
+      return await db.Post.findMany({
+        where: {
+          title: {
+            contains: searchedTitle ?? "",
+          },
+          author: {
+            contains: searchedAuthor ?? "",
+          },
+          text: {
+            contains: searchedText ?? "",
+          },
         },
-        author: {
-          contains: searchedAuthor ?? "",
-        },
-        text: {
-          contains: searchedText ?? "",
-        },
-      },
-    });
+      });
+    } catch {}
+    return [];
   },
 
   /**
@@ -71,7 +74,7 @@ export default {
    */
   update: async (postId, updatedPost) => {
     try {
-      updatedPost.date = new Date(updatedPost.date * 1000)
+      updatedPost.date = new Date(updatedPost.date * 1000);
       await db.Post.update({
         where: {
           id: parseInt(postId),
